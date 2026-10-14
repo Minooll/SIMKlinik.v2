@@ -13,6 +13,7 @@ Desktop.ini
 .DS_Store
 *.swp
 *.swo
+*.zip
 
 # IDE & Editor settings
 .idea/
