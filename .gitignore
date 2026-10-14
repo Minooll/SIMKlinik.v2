@@ -1,0 +1,56 @@
+# Environment & Secrets (Crucial: Never commit secrets)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+serviceAccountKey.json
+
+# Operating System Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*.swo
+
+# IDE & Editor settings
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-workspace
+*.sublime-project
+
+# Node.js & Next.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.next/
+out/
+build/
+dist/
+.turbo/
+
+# Flutter & Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+/build/
+ios/.symlinks/
+ios/Pods/
+ios/Podfile.lock
+android/.gradle/
+android/app/build/
+android/local.properties
+*.iml
+
+# Supabase
+.branches/
+supabase/.temp/
+supabase/.branches/
