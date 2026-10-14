@@ -40,7 +40,8 @@ void main() {
       final repo = QueueRepository();
       final ticketsBefore = await repo.getMyTickets();
       expect(ticketsBefore is ApiSuccess<List<QueueTicketModel>>, true);
-      final ticket = (ticketsBefore as ApiSuccess<List<QueueTicketModel>>).data.first;
+      final ticket =
+          (ticketsBefore as ApiSuccess<List<QueueTicketModel>>).data.first;
 
       // Execute QR check-in
       final checkInRes = await repo.checkInWithQr(ticket.qrToken);
@@ -49,7 +50,10 @@ void main() {
       // Verify status changed to checked_in
       final ticketAfter = await repo.getTicketById(ticket.id);
       expect(ticketAfter is ApiSuccess<QueueTicketModel>, true);
-      expect((ticketAfter as ApiSuccess<QueueTicketModel>).data.status, 'checked_in');
+      expect(
+        (ticketAfter as ApiSuccess<QueueTicketModel>).data.status,
+        'checked_in',
+      );
     });
 
     test('Repeated QR check-in is idempotent and does not error', () async {
@@ -81,38 +85,41 @@ void main() {
       expect(scheduleAtLimit.isAvailable, false);
     });
 
-    test('Queue ticket peopleAhead calculation handles edge cases gracefully', () {
-      final ticket = QueueTicketModel(
-        id: 't1',
-        queueSessionId: 's1',
-        patientId: 'p1',
-        userId: 'u1',
-        ticketNumber: 5,
-        ticketCode: 'A-005',
-        qrToken: 'QR-TOKEN-123',
-        status: 'waiting',
-        createdAt: DateTime.now(),
-        currentSessionNumber: 2,
-      );
+    test(
+      'Queue ticket peopleAhead calculation handles edge cases gracefully',
+      () {
+        final ticket = QueueTicketModel(
+          id: 't1',
+          queueSessionId: 's1',
+          patientId: 'p1',
+          userId: 'u1',
+          ticketNumber: 5,
+          ticketCode: 'A-005',
+          qrToken: 'QR-TOKEN-123',
+          status: 'waiting',
+          createdAt: DateTime.now(),
+          currentSessionNumber: 2,
+        );
 
-      // Current serving is 2, my ticket is 5 -> 2 people ahead (tickets 3 and 4)
-      expect(ticket.peopleAhead, 2);
+        // Current serving is 2, my ticket is 5 -> 2 people ahead (tickets 3 and 4)
+        expect(ticket.peopleAhead, 2);
 
-      // When current serving reaches 5
-      final ticketNowServing = QueueTicketModel(
-        id: 't1',
-        queueSessionId: 's1',
-        patientId: 'p1',
-        userId: 'u1',
-        ticketNumber: 5,
-        ticketCode: 'A-005',
-        qrToken: 'QR-TOKEN-123',
-        status: 'called',
-        createdAt: DateTime.now(),
-        currentSessionNumber: 5,
-      );
+        // When current serving reaches 5
+        final ticketNowServing = QueueTicketModel(
+          id: 't1',
+          queueSessionId: 's1',
+          patientId: 'p1',
+          userId: 'u1',
+          ticketNumber: 5,
+          ticketCode: 'A-005',
+          qrToken: 'QR-TOKEN-123',
+          status: 'called',
+          createdAt: DateTime.now(),
+          currentSessionNumber: 5,
+        );
 
-      expect(ticketNowServing.peopleAhead, 0);
-    });
+        expect(ticketNowServing.peopleAhead, 0);
+      },
+    );
   });
 }
