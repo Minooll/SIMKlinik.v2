@@ -35,6 +35,7 @@ out/
 build/
 dist/
 .turbo/
+*.tsbuildinfo
 
 # Flutter & Dart
 .dart_tool/
